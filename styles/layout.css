@@ -88,3 +88,7 @@ article img {
 #slideshow img {
 	position: absolute;
 }
+
+#imagegallery li {
+	display: inline;
+}

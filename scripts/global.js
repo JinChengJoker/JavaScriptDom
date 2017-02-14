@@ -81,8 +81,55 @@ function prepareInternalnav() {
     }
 }
 
+function insertAfter(newElement,targetElement) {
+    var parentElement = targetElement.parentNode;
+    if (parentElement.lastChild == targetElement) {
+        parentElement.appendChild(newElement);
+    } else {
+        parentElement.insertBefore(newElement,targetElement.nextSlibing);
+    }
+}
+
+function preparePlaceholder() {
+    var placeholder = document.createElement('img');
+    placeholder.setAttribute('id','placeholder');
+    placeholder.setAttribute('src','images/placeholder.gif');
+    if (!document.getElementById('imagegallery')) {
+        return false;
+    }
+    var imagegallery = document.getElementById('imagegallery');
+    insertAfter(placeholder,imagegallery);
+    var description = document.createElement('p');
+    description.setAttribute('id','description');
+    var text = document.createTextNode('Choose an image');
+    description.appendChild(text);
+    insertAfter(description,placeholder);
+}
+
+function showPic(whichpic) {
+    var href = whichpic.getAttribute('href');
+    var placeholder = document.getElementById('placeholder');
+    placeholder.setAttribute('src',href);
+    var text = whichpic.getAttribute('title');
+    var description = document.getElementById('description');
+    description.firstChild.nodeValue = text;
+}
+
+function prepareGallery() {
+    var imagegallery = document.getElementById('imagegallery');
+    var links = imagegallery.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+        links[i].onclick = function() {
+            showPic(this);
+            return false;
+        }
+    }
+}
+
 window.onload = function() {
     highlightPage();
     slideShow();
     prepareInternalnav();
+    preparePlaceholder();
+    prepareGallery();
 }
