@@ -116,6 +116,9 @@ function showPic(whichpic) {
 }
 
 function prepareGallery() {
+    if (!document.getElementById('imagegallery')) {
+        return false;
+    }
     var imagegallery = document.getElementById('imagegallery');
     var links = imagegallery.getElementsByTagName('a');
     for (var i = 0; i < links.length; i++) {
@@ -126,10 +129,51 @@ function prepareGallery() {
     }
 }
 
+function addClass(element,value) {
+    if (!element.className) {
+        element.className = value;
+    } else {
+        var oldClassName = element.className;
+        var newClassName = oldClassName + ' ' + value;
+        element.className = newClassName;
+    }
+}
+
+function stripeTables() {
+    var tables = document.getElementsByTagName('table');
+    for (var i = 0; i < tables.length; i++) {
+        var rows = tables[i].getElementsByTagName('tr');
+        var odd = false;
+        for (var j = 0; j < rows.length; j++) {
+            if (odd == true) {
+                addClass(rows[j],'odd');
+                odd = false;
+            } else {
+                odd = true;
+            }
+        }
+    }
+}
+
+function highlightRow() {
+    var rows = document.getElementsByTagName('tr');
+    for (var i = 0; i < rows.length; i++) {
+        rows[i].oldClassName = rows[i].className;
+        rows[i].onmouseover = function() {
+            addClass(this,'highlight');
+        }
+        rows[i].onmouseout = function() {
+            this.className = this.oldClassName;
+        }
+    }
+}
+
 window.onload = function() {
     highlightPage();
     slideShow();
     prepareInternalnav();
     preparePlaceholder();
     prepareGallery();
+    stripeTables();
+    highlightRow();
 }
