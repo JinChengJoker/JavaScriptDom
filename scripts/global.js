@@ -1,16 +1,26 @@
+// function highlightPage() {
+//     var header = document.getElementsByTagName('header');
+//     var nav = header[0].getElementsByTagName('nav');
+//     var links = nav[0].getElementsByTagName('a');
+//     var body = document.getElementsByTagName('body');
+//     for (var i = 0; i < links.length; i++) {
+//         var linkurl = links[i].getAttribute('href');
+//         if (window.location.href.indexOf(linkurl) != -1) {
+//             links[i].className = 'here';
+//             var linktext = links[i].firstChild.nodeValue.toLowerCase();
+//             body[0].setAttribute('id',linktext);
+//         }
+//     }
+// }
+
 function highlightPage() {
-    var header = document.getElementsByTagName('header');
-    var nav = header[0].getElementsByTagName('nav');
-    var links = nav[0].getElementsByTagName('a');
-    var body = document.getElementsByTagName('body');
-    for (var i = 0; i < links.length; i++) {
-        var linkurl = links[i].getAttribute('href');
+    var links = $('header a');
+    links.each(function(index) {
+        var linkurl = links.eq(index).attr('href');
         if (window.location.href.indexOf(linkurl) != -1) {
-            links[i].className = 'here';
-            var linktext = links[i].firstChild.nodeValue.toLowerCase();
-            body[0].setAttribute('id',linktext);
+            links.eq(index).addClass('here');
         }
-    }
+    })
 }
 
 function moveImg(elementID,finalx,time) {
@@ -126,16 +136,6 @@ function prepareGallery() {
             showPic(this);
             return false;
         }
-    }
-}
-
-function addClass(element,value) {
-    if (!element.className) {
-        element.className = value;
-    } else {
-        var oldClassName = element.className;
-        var newClassName = oldClassName + ' ' + value;
-        element.className = newClassName;
     }
 }
 
